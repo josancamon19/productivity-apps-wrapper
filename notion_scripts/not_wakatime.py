@@ -1,4 +1,5 @@
 from . import utils, unofficial_api_utils
+from utils import get_today_str
 import requests
 import datetime
 import os
@@ -7,7 +8,7 @@ database_wakatime = os.getenv('NOTION_WAKATIME_DB')
 
 
 def get_today_page():
-    data = {'filter': {'property': '-Date', "date": {"equals": datetime.date.today().strftime('%Y-%m-%d')}}}
+    data = {'filter': {'property': '-Date', "date": {"equals": get_today_str()}}}
     result = requests.post(f'{utils.base_url}databases/{database_wakatime}/query', json=data, headers=utils.headers).json()
     today_page = [task['id'] for task in result['results']]
     return today_page
@@ -56,7 +57,7 @@ def get_db_added_waka_time():
 
 def save_wakatime_data(data: dict):
     already_added = get_db_added_waka_time()
-    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = get_today_str()
     for date, day_data in data.items():
         
         if date in already_added and date != today:

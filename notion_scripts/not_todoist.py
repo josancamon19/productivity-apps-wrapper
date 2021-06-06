@@ -1,4 +1,5 @@
 from . import utils, not_habits
+from utils import get_today_str
 from collections import defaultdict
 import requests
 import datetime
@@ -35,7 +36,7 @@ def query_today_tasks():
     data = {
         'filter': {
             'property': 'Completion Date',
-            "date": {"equals": datetime.date.today().strftime('%Y-%m-%d')}
+            "date": {"equals": get_today_str()}
         }
     }
     result = requests.post(f'{utils.base_url}databases/{database_todoist}/query', json=data, headers=utils.headers).json()

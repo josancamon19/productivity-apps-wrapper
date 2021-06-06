@@ -1,5 +1,5 @@
 from notion_scripts.unofficial_api_utils import synchronize_select_options
-
+from utils import get_today_str
 import todoist
 import datetime
 import os
@@ -17,13 +17,13 @@ def parse_task_data(data: dict):
 
 
 def get_completed_today_tasks():
-    since = datetime.date.today().strftime('%Y-%m-%d') + 'T00:00'
+    since = get_today_str() + 'T00:00'
     completed = api.completed.get_all(since=since)
     return [parse_task_data(task) for task in reversed(completed['items'])]
 
 
 def get_completed_today_habits():
-    since = datetime.date.today().strftime('%Y-%m-%d') + 'T00:00'
+    since = get_today_str() + 'T00:00'
     completed = api.completed.get_all(since=since, project_id=2266970739)
     return [parse_task_data(task) for task in reversed(completed['items'])]
 

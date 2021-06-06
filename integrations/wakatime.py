@@ -1,6 +1,5 @@
+from utils import get_today_str
 import requests
-import json
-import datetime
 import os
 
 token = os.getenv('WAKATIME_API_KEY')
@@ -28,14 +27,14 @@ def parse_summary(day: dict):
 
 
 def get_today_summary():
-    tod = datetime.date.today().strftime('%Y-%m-%d')
+    tod = get_today_str()
     url = f'{base_url}users/current/summaries?api_key={token}&start={tod}&end={tod}'
     day = requests.get(url).json()['data'][0]
     return parse_summary(day)[tod]
 
 
 def get_dates_summaries():
-    tod = datetime.date.today().strftime('%Y-%m-%d')
+    tod = get_today_str()
     url = f'{base_url}users/current/summaries?api_key={token}&start=2021-01-01&end={tod}'
     response = requests.get(url).json()
     

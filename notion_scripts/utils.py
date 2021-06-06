@@ -19,3 +19,4 @@ def map_select_value(value):
 
 def map_multi_select_value(values):
     return {"type": "multi_select", "multi_select": [{'name': value.replace('@', '')} for value in values]}
+

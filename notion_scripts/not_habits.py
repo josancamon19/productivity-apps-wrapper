@@ -2,12 +2,13 @@ import requests
 from collections import defaultdict
 import datetime
 from . import utils, unofficial_api_utils
+from utils import get_today_str
 
 database_habits = 'b5d76d7b3186427288fe545c20ce3668'
 
 
 def get_today_page():
-    data = {'filter': {'property': '-Date', "date": {"equals": datetime.date.today().strftime('%Y-%m-%d')}}}
+    data = {'filter': {'property': '-Date', "date": {"equals": get_today_str()}}}
     result = requests.post(f'{utils.base_url}databases/{database_habits}/query', json=data, headers=utils.headers).json()
     today_page = [task['id'] for task in result['results']]
     return today_page
@@ -46,7 +47,7 @@ def save_habits(data: list):
         return day
     
     already_added = get_db_added_habits()
-    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = get_today_str()
     for date, habits in grouped.items():
         if date in already_added and date != today:
             continue

@@ -1,3 +1,4 @@
+from utils import get_today_str, get_today
 from collections import defaultdict
 import requests
 import json
@@ -35,14 +36,14 @@ def parse_day_data(day):
 
 
 def get_today_data():
-    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = get_today_str()
     day = requests.get(f'{base_url}daily_summary_feed?key={key}&date={today}').json()[0]
     return parse_day_data(day)
 
 
 def get_daily_data():
     start = datetime.date(2021, 1, 1)
-    upto = datetime.date.today()
+    upto = get_today()
     dates = [start.strftime('%Y-%m-%d')]
     
     while (start + datetime.timedelta(days=14)) < upto:

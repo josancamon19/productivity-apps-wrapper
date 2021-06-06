@@ -1,8 +1,8 @@
 from . import utils, not_todoist
 from integrations import rescue_time, wakatime, todoist
+from utils import get_today_str
 import json
 import requests
-import datetime
 import os
 
 day_reviews_db = os.getenv('NOTION_DAY_REVIEWS_DB')
@@ -27,7 +27,7 @@ def set_day_review_questions(blocks):
     
     questions = ['Did you do all what you planned for your day? Yes | No',
                  'Did you do important or just busy? Important | Busy',
-                 'Did something unexpected changed the planing? if so, how that affected?'
+                 'Did something unexpected changed the planing? if so, how that affected?',
                  'What went well?',
                  'What didnt go well?', ]
     
@@ -102,7 +102,7 @@ def fill_day_review_page(page_id):
 
 
 def create_day_review_page():
-    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = get_today_str()
     
     data = {'parent': {'type': 'database_id', 'database_id': day_reviews_db},
             'properties': {

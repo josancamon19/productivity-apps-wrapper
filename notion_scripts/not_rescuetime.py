@@ -1,4 +1,5 @@
 from . import utils, unofficial_api_utils
+from utils import get_today_str
 import requests
 import datetime
 import os
@@ -21,7 +22,7 @@ def get_db_added_rescue_time():
 
 
 def get_today_page():
-    data = {'filter': {'property': 'Date', "date": {"equals": datetime.date.today().strftime('%Y-%m-%d')}}}
+    data = {'filter': {'property': 'Date', "date": {"equals": get_today_str()}}}
     result = requests.post(f'{utils.base_url}databases/{database_rescue_time}/query', json=data, headers=utils.headers).json()
     today_page = [task['id'] for task in result['results']]
     return today_page
@@ -53,7 +54,7 @@ def add_page_stats_content(page_id, applications):
 # noinspection PyTypeChecker
 def save_rescuetime_data(data):
     already_added = get_db_added_rescue_time()
-    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = get_today_str()
     
     for day in data:
         if day['id'] in already_added and day['date'] != today:
