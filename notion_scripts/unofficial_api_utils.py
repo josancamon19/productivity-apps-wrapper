@@ -5,8 +5,10 @@ client = NotionClient(token_v2=os.getenv('NOTION_V2_TOKEN'))
 
 
 def delete_page(page_id):
-    page = client.get_block(page_id)
-    page.remove()
+    if not page_id:
+        return
+    if page := client.get_block(page_id):
+        page.remove()
 
 
 def synchronize_select_options(projects, sections, tags):
