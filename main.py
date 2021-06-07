@@ -21,11 +21,17 @@ def wakatime_sync():
     notion_scripts.not_wakatime.save_wakatime_data(stats)
 
 
+def goals_sync():
+    goals_todoist_tasks = todoist.get_completed_goals_tasks()
+    notion_scripts.not_goals.save_goals_tasks(goals_todoist_tasks)
+
+
 def sync_apps():
     threads = [
         threading.Thread(target=todoist_sync),
         threading.Thread(target=rescue_time_sync),
-        threading.Thread(target=wakatime_sync)
+        threading.Thread(target=wakatime_sync),
+        threading.Thread(target=goals_sync)
     ]
     [t.start() for t in threads]
     [t.join() for t in threads]

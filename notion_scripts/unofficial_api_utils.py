@@ -39,4 +39,18 @@ def synchronize_select_options(projects, sections, tags):
     print('Synchronizing completed !!')
     # sync Project, Parent project, Section, Tags
 
-# synchronize_select_options([], [], [])
+
+def synchronize_goals(goals):
+    cv = client.get_collection_view(os.getenv('NOTION_GOALS_VIEW'))
+    existing_db_goals = []
+    for prop in cv.collection.get_schema_properties():
+        if prop['name'] == 'Goal':
+            existing_db_goals = [option['value'] for option in prop.get('options', [])]
+            break
+
+    row = cv.collection.add_row()
+    row.Task = "DELETE ME"
+    [row.set_property('Goal', goal) for goal in goals if goal not in existing_db_goals]
+    row.remove()
+    
+    print('Synchronizing completed !!')

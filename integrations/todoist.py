@@ -1,13 +1,11 @@
 from notion_scripts.unofficial_api_utils import synchronize_select_options
 from utils import get_today_str
 import todoist
-import datetime
 import os
 
 api = todoist.TodoistAPI(os.getenv('TODOIST_TOKEN'))
 api.sync()
 
-# TODO make sure to keep them updated (projects, subprojects, sections, tags) NOTION BETA NOT READY YET
 sections = {section.data.get('id'): section.data.get('name') for section in api.sections.all()}
 labels = {label.data.get('id'): label.data.get('name') for label in api.labels.all()}
 
@@ -26,6 +24,15 @@ def get_completed_today_habits():
     since = get_today_str() + 'T00:00'
     completed = api.completed.get_all(since=since, project_id=2266970739)
     return [parse_task_data(task) for task in reversed(completed['items'])]
+
+
+def get_completed_goals_tasks():
+    completed = api.completed.get_all(project_id=2254137012, since='2021-01-01T00:00')
+    return [parse_task_data(task) for task in reversed(completed['items'])]
+
+
+def get_goals_sections():
+    return [label.data.get('name') for label in api.sections.all(filt=lambda x: x.data.get('project_id') == 2254137012)]
 
 
 def get_completed_tasks_by_project_id(project_id, limit=200, since='2021-01-1T00:00'):
@@ -87,7 +94,6 @@ def get_projects():
         if name == 'Inbox':
             continue
         projects[project_id] = {'name': name, 'archived': archived, 'parent_id': parent_id}
-    
     return projects
 
 

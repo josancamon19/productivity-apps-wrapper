@@ -1,10 +1,11 @@
+import os
+
 import requests
 from collections import defaultdict
-import datetime
 from . import utils, unofficial_api_utils
 from utils import get_today_str
 
-database_habits = 'b5d76d7b3186427288fe545c20ce3668'
+database_habits = os.getenv('NOTION_HABITS_DB')
 
 
 def get_today_page():

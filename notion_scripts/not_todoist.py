@@ -114,5 +114,8 @@ def save_tasks(tasks: dict):
             not_habits.save_habits(tasks)
             continue
         
+        elif project_name == 'Goals':
+            print('GOALSSSSS', parent, tasks)
+        
         for task in tasks:
             create_db_item(task, project_name, parent)
