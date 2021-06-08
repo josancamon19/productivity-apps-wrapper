@@ -1,7 +1,8 @@
+import datetime
+
 from . import utils, not_todoist
 from integrations import rescue_time, wakatime, todoist
-from utils import get_today_str
-import json
+from utils import get_today_str, get_today
 import requests
 import os
 
@@ -12,14 +13,6 @@ block = lambda text, kind: {
     "type": kind,
     kind: {"text": [{'type': 'text', 'text': {'content': text}}]}
 }
-
-
-def get_db_day_reviews():
-    data = requests.post(f'{utils.base_url}databases/{day_reviews_db}/query', json={}, headers=utils.headers).json()
-    for page in data['results']:
-        page_id = page['id']
-        props = page['properties']
-    print(json.dumps(data, indent=4))
 
 
 def set_day_review_questions(blocks):
@@ -118,3 +111,21 @@ def create_day_review_page():
     result = requests.post(f'{utils.base_url}pages', json=data, headers=utils.headers)
     page_id = result.json()['id']
     fill_day_review_page(page_id)
+    create_next_day_highlights_page()
+
+
+def create_next_day_highlights_page():
+    tomorrow = (get_today() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    data = {'parent': {'type': 'database_id', 'database_id': day_reviews_db},
+            'properties': {
+                "Name": {"type": "title", "title": [{"type": "text", "text": {"content": '✅ Day highlights'}}]},
+                "Date": {"type": "date", "date": {"start": tomorrow}},
+            }}
+    result = requests.post(f'{utils.base_url}pages', json=data, headers=utils.headers)
+    page_id = result.json()['id']
+    blocks = [block('What are the 3 things (or less) you\'ll focus on tomorrow?', 'paragraph')]
+    
+    data = {'children': blocks}
+    url = f'{utils.base_url}blocks/{page_id}/children'
+    r = requests.patch(url, json=data, headers=utils.headers).json()
+    print(r)
