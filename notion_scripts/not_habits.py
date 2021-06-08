@@ -44,6 +44,10 @@ def save_habits(data: list):
                 day.append('📚 Reading')
             elif 'exercise' in habit['content'].lower():
                 day.append('🏃🏼 Exercise')
+            elif 'review' in habit['content'].lower():  # TODO seems to yesterday marked treated as today, why?
+                day.append('🤔  Day Review')
+            elif 'tasks' in habit['content'].lower():
+                day.append('📆  Next Day Planning')
         
         return day
     
