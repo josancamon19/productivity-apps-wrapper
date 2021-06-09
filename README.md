@@ -1,7 +1,8 @@
 # Productivity apps wrapper
 
-This project aims to be a wrapper for some common productivity apps that I use in my everyday basis. This project is the result of my
-interest on doing this, and the poor integrations made by [zapier.com](http://zapier.com/) and [automate.io](http://automate.io/).
+This project aims to be a wrapper for some common productivity apps that I use in my everyday basis. This project is the result of me
+wanting to find a way for looking at all my productivity data, and having to do it on my own due to the poor integrations made
+by [zapier.com](http://zapier.com/) and [automate.io](http://automate.io/).
 
 It aims to help you do understand what you get done every day, keep track of it, get valuable statistics out of your daily performance, and
 performing even better on your next day.
@@ -50,9 +51,11 @@ Database             |  Details
   dynamic.
 
 --- 
+
 ### Notion setup
 
-- Generate the notion token for the integration and share every page needed here with the integration https://developers.notion.com/docs#step-1-create-an-integration
+- Generate the notion token for the integration and share every page needed here with the
+  integration https://developers.notion.com/docs#step-1-create-an-integration
 - Get the Token v2 for the unofficial API as explained https://github.com/jamalex/notion-py#quickstart
 
 #### You need to create a few pages:
@@ -107,53 +110,65 @@ Duplicate everything as a [Template](https://www.notion.so/josancamon19/Copy-of-
     - ```Date``` for the title
     - ```Total``` Seconds with total hours
     - ```-Date``` for setting a Date object
+
 ---
+
 ### Code setup
+
 1. Install the ```requirements.txt``` with ```pip install -r requirements.txt```
 2. Setting your env vars
 
 
-   - ```NOTION_API_VERSION```: https://developers.notion.com/reference/versioning 
-   - ```NOTION_SECRET```: https://developers.notion.com/docs#getting-started
-   - ```NOTION_V2_TOKEN``` https://github.com/jamalex/notion-py#quickstart
+- ```NOTION_API_VERSION```: https://developers.notion.com/reference/versioning
+- ```NOTION_SECRET```: https://developers.notion.com/docs#getting-started
+- ```NOTION_V2_TOKEN``` https://github.com/jamalex/notion-py#quickstart
 
-     
-   - ```TODOIST_TOKEN```: https://developer.todoist.com/sync/v8/#authorization
-   - ```RESCUETIME_API_KEY```: https://www.rescuetime.com/anapi/manage
-   - ```WAKATIME_API_KEY```: https://wakatime.com/settings/account
-     
 
-   - ```NOTION_TODOIST_VIEW```= The projects table page URL
-   - ```NOTION_TODOIST_DB```= Projects table ID (take it from the URL)
-   - ```NOTION_RESCUETIME_DB```= Daily Stats page id
-   - ```NOTION_WAKATIME_DB```= Coding stats page id
-   - ```NOTION_HABITS_DB```= Habit Tracker page id
-   - ```NOTION_DAY_REVIEWS_DB```= Day Review page ID
-   - ```NOTION_GOALS_VIEW```= Goals Progress page URL
-   - ```NOTION_GOALS_DB```= Goals Progress ID
+- ```TODOIST_TOKEN```: https://developer.todoist.com/sync/v8/#authorization
+- ```RESCUETIME_API_KEY```: https://www.rescuetime.com/anapi/manage
+- ```WAKATIME_API_KEY```: https://wakatime.com/settings/account
+
+
+- ```NOTION_TODOIST_VIEW```= The projects table page URL
+- ```NOTION_TODOIST_DB```= Projects table ID (take it from the URL)
+- ```NOTION_RESCUETIME_DB```= Daily Stats page id
+- ```NOTION_WAKATIME_DB```= Coding stats page id
+- ```NOTION_HABITS_DB```= Habit Tracker page id
+- ```NOTION_DAY_REVIEWS_DB```= Day Review page ID
+- ```NOTION_GOALS_VIEW```= Goals Progress page URL
+- ```NOTION_GOALS_DB```= Goals Progress ID
 
 3. Update the ```example.env``` file and fill it with the variables
-```dotenv
-NOTION_API_VERSION=2021-05-13
-NOTION_SECRET=
-NOTION_V2_TOKEN=
-
-TODOIST_TOKEN=
-RESCUETIME_API_KEY=
-WAKATIME_API_KEY=
-
-NOTION_TODOIST_VIEW=
-NOTION_TODOIST_DB=
-NOTION_RESCUETIME_DB=
-NOTION_WAKATIME_DB=
-NOTION_HABITS_DB=
-NOTION_DAY_REVIEWS_DB=
-NOTION_GOALS_VIEW=
-NOTION_GOALS_DB=
-```
+   ```dotenv
+   NOTION_API_VERSION=2021-05-13
+   NOTION_SECRET=
+   NOTION_V2_TOKEN=
+   
+   TODOIST_TOKEN=
+   RESCUETIME_API_KEY=
+   WAKATIME_API_KEY=
+   
+   NOTION_TODOIST_VIEW=
+   NOTION_TODOIST_DB=
+   NOTION_RESCUETIME_DB=
+   NOTION_WAKATIME_DB=
+   NOTION_HABITS_DB=
+   NOTION_DAY_REVIEWS_DB=
+   NOTION_GOALS_VIEW=
+   NOTION_GOALS_DB=
+   ```
 4. Activate env vars with ```source example.env```
 
+---
+
 ### Deployment setup
+
+- Create a heroku account
+- Set billing for the account (you'll spend $0 hosting this application)
+- Create an app
+- Set the Buildpack to heroku/python
+- Add the git remote from heroku
+- Push to the remote
 
 ## TODOs
 
