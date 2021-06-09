@@ -172,8 +172,7 @@ Duplicate everything as a [Template](https://www.notion.so/josancamon19/Copy-of-
 
 ## TODOs
 
-- Integrate Apple Health data (Sleep too)
-- Integrate with apple fit data
+- Integrate Apple Health data (Workouts, Sleep, Steps, etc ...)
 - Page details content as tables instead of ```\t``` separated strings
 
 ## FAQ

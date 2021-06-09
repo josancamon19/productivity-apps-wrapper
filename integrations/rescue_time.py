@@ -42,7 +42,8 @@ def get_today_data():
 
 
 def get_daily_data():
-    start = datetime.date(2021, 1, 1)
+    sync_since = os.getenv('SYNC_SINCE').split('-')
+    start = datetime.date(int(sync_since[0]), int(sync_since[1]), int(sync_since[2]))
     upto = get_today()
     dates = [start.strftime('%Y-%m-%d')]
     
@@ -59,7 +60,7 @@ def get_daily_data():
         response = requests.get(f'{base_url}daily_summary_feed?key={key}&date={date}')
         data += [item for item in response.json() if item['date'] not in map(lambda x: x['date'], data)]
     
-    print(f'Total data received from 2021-01-01:', len(data))
+    print(f'Total data received from {sync_since}:', len(data))
     
     daily_stats = []
     for day in data:

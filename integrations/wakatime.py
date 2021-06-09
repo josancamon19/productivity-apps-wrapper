@@ -35,7 +35,8 @@ def get_today_summary():
 
 def get_dates_summaries():
     tod = get_today_str()
-    url = f'{base_url}users/current/summaries?api_key={token}&start=2021-01-01&end={tod}'
+    sync_since = os.getenv('SYNC_SINCE')
+    url = f'{base_url}users/current/summaries?api_key={token}&start={sync_since}&end={tod}'
     response = requests.get(url).json()
     
     data = {}

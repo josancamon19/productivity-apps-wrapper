@@ -9,6 +9,10 @@ api.sync()
 sections = {section.data.get('id'): section.data.get('name') for section in api.sections.all()}
 labels = {label.data.get('id'): label.data.get('name') for label in api.labels.all()}
 
+habits_project_id = int(os.getenv('TODOIST_HABITS_PROJECT_ID'))
+goals_project_id = int(os.getenv('TODOIST_GOALS_PROJECT_ID'))
+sync_since = os.getenv('SYNC_SINCE')
+
 
 def parse_task_data(data: dict):
     return {'id': data['task_id'], 'content': data['content'], 'date_completed': data['completed_date'], }
@@ -22,20 +26,21 @@ def get_completed_today_tasks():
 
 def get_completed_today_habits():
     since = get_today_str() + 'T00:00'
-    completed = api.completed.get_all(since=since, project_id=2266970739)
+    completed = api.completed.get_all(since=since, project_id=habits_project_id)
     return [parse_task_data(task) for task in reversed(completed['items'])]
 
 
 def get_completed_goals_tasks():
-    completed = api.completed.get_all(project_id=2254137012, since='2021-01-01T00:00')
+    completed = api.completed.get_all(project_id=goals_project_id, since=f'{sync_since}T00:00')
     return [parse_task_data(task) for task in reversed(completed['items'])]
 
 
 def get_goals_sections():
-    return [label.data.get('name') for label in api.sections.all(filt=lambda x: x.data.get('project_id') == 2254137012)]
+    return [label.data.get('name') for label in
+            api.sections.all(filt=lambda x: x.data.get('project_id') == goals_project_id)]
 
 
-def get_completed_tasks_by_project_id(project_id, limit=200, since='2021-01-1T00:00'):
+def get_completed_tasks_by_project_id(project_id, limit=200, since=f'{sync_since}T00:00'):
     completed_tasks = []
     
     completed = api.completed.get_all(project_id=project_id, limit=limit, since=since)
@@ -105,7 +110,7 @@ def get_tasks_history(already_saved_tasks):
         list(sections.values()),
         list(labels.values()))
     
-    to_ignore = [2250617044, 2232633941, 2258542988]
+    to_ignore = eval(os.getenv('TODOIST_TOIGNORE_PROJECTS'))
     
     history = {}
     
