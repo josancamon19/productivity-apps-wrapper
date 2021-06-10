@@ -45,7 +45,7 @@ def schedule_synchronizer():
     
     day_reviews_time = os.getenv('SYNC_DAY_REVIEWS_AT').split(':')
     scheduler.add_job(notion_scripts.day_reviews.create_day_review_page, 'cron', id='day_reviews', hour=int(day_reviews_time[0]),
-                      minute=int(day_reviews_time[0]))
+                      minute=int(day_reviews_time[1]))
     scheduler.start()
 
 
