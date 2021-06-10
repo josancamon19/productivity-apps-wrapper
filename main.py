@@ -3,6 +3,7 @@ from integrations import wakatime, rescue_time, todoist
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 import threading
+import os
 
 
 def todoist_sync():
@@ -38,10 +39,13 @@ def sync_apps():
 
 
 def schedule_synchronizer():
-    scheduler = BlockingScheduler(timezone='America/Bogota')
+    scheduler = BlockingScheduler(timezone=os.getenv('SYNC_TIMEZONE'))
     
-    scheduler.add_job(sync_apps, 'interval', hours=1, )
-    scheduler.add_job(notion_scripts.day_reviews.create_day_review_page, 'cron', id='day_reviews', hour=21, minute=50)
+    scheduler.add_job(sync_apps, 'interval', hours=int(os.getenv('SYNC_EVERY_HOURS')), )
+    
+    day_reviews_time = os.getenv('SYNC_DAY_REVIEWS_AT').split(':')
+    scheduler.add_job(notion_scripts.day_reviews.create_day_review_page, 'cron', id='day_reviews', hour=int(day_reviews_time[0]),
+                      minute=int(day_reviews_time[0]))
     scheduler.start()
 
 
