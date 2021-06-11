@@ -138,6 +138,18 @@ Duplicate everything as a [Template](https://www.notion.so/josancamon19/Copy-of-
 - ```NOTION_GOALS_VIEW```= Goals Progress page URL
 - ```NOTION_GOALS_DB```= Goals Progress ID
 
+
+- ```TODOIST_HABITS_PROJECT_ID```= Todoist project for habits
+- ```TODOIST_GOALS_PROJECT_ID```=Todoist project for goals
+- ```TODOIST_TOIGNORE_PROJECTS```=Todoist projects you may want toexclude
+
+
+- ```SYNC_SINCE```= The date from you want to sync all your data
+- ```SYNC_TIMEZONE```= Timezone you're in (specially important for day reviews)
+- ```SYNC_EVERY_HOURS```=1 (Synchronize all your data every n hours)
+- ```SYNC_DAY_REVIEWS_AT```=21:50 (Time at what you want the script to create the day review pages, I do mine at 22:00, so 21:50 it's fine
+  for me)
+
 3. Update the ```example.env``` file and fill it with the variables
    ```dotenv
    NOTION_API_VERSION=2021-05-13
@@ -156,6 +168,14 @@ Duplicate everything as a [Template](https://www.notion.so/josancamon19/Copy-of-
    NOTION_DAY_REVIEWS_DB=
    NOTION_GOALS_VIEW=
    NOTION_GOALS_DB=
+   TODOIST_HABITS_PROJECT_ID=2266970739
+   TODOIST_GOALS_PROJECT_ID=2254137012
+   TODOIST_TOIGNORE_PROJECTS="[2250617044, 2232633941, 2258542988]"
+   
+   SYNC_SINCE=2021-01-01
+   SYNC_TIMEZONE=America/Bogota
+   SYNC_EVERY_HOURS=1
+   SYNC_DAY_REVIEWS_AT=21:50
    ```
 4. Activate env vars with ```source example.env```
 
@@ -176,5 +196,3 @@ Duplicate everything as a [Template](https://www.notion.so/josancamon19/Copy-of-
 - Page details content as tables instead of ```\t``` separated strings
 
 ## FAQ
-
-## License
