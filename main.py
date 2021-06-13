@@ -51,5 +51,5 @@ def schedule_synchronizer():
 
 if __name__ == '__main__':
     sync_apps()
-    # schedule_synchronizer()
+    schedule_synchronizer()
     # notion_scripts.day_reviews.create_day_review_page()
