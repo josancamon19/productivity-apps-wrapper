@@ -83,13 +83,17 @@ def create_db_item(task: dict, project: str, parent_project: str):
                 "Parent project": utils.map_select_value(str(parent_project)),
                 "Creation Date": {
                     "type": "date",
-                    "date": {"start": task.get('date_completed')}
+                    "date": {"start": task.get('date_added')}
                 },
                 "Completion Date": {
                     "type": "date",
-                    "date": {"start": task.get('date_added')}
+                    "date": {"start": task.get('date_completed')}
                 }
             }}
+    if not task.get('date_added'):
+        print('INVALID:', task)
+        return
+    
     if task.get('section'):
         data['properties']['Section'] = utils.map_select_value(task['section'])
     if task.get('tags'):
