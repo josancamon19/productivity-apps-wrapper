@@ -1,3 +1,5 @@
+import json
+
 from notion_scripts.unofficial_api_utils import synchronize_select_options
 from utils import get_today_str
 import todoist
@@ -99,6 +101,7 @@ def get_projects():
         if name == 'Inbox':
             continue
         projects[project_id] = {'name': name, 'archived': archived, 'parent_id': parent_id}
+    
     return projects
 
 
@@ -119,6 +122,9 @@ def get_tasks_history(already_saved_tasks):
             print('Ignoring', project_data['name'])
             continue
         
+        if project_data['name'] != 'Android':
+            continue
+        
         completed_tasks = get_completed_tasks_by_project_id(project_id)
         print(project_data['name'], 'tasks:', len(completed_tasks))
         completed_tasks = list(filter(lambda task: str(task['id']) not in already_saved_tasks, completed_tasks))
@@ -126,5 +132,10 @@ def get_tasks_history(already_saved_tasks):
         completed_tasks_details = detail_completed_tasks(completed_tasks)
         
         parent = projects[project_data['parent_id']]['name'] if project_data['parent_id'] is not None else project_data['name']
+        
+        if history.get(project_data['name']):
+            history[f'{project_data["name"]}-{parent}'] = {'parent': parent, 'tasks': completed_tasks_details}
+            continue
+            
         history[project_data['name']] = {'parent': parent, 'tasks': completed_tasks_details}
     return history

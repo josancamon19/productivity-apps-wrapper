@@ -2,7 +2,6 @@ from . import utils, not_habits
 from utils import get_today_str
 from collections import defaultdict
 import requests
-import datetime
 import os
 
 database_todoist = os.getenv('NOTION_TODOIST_DB')
@@ -16,7 +15,7 @@ def get_db_added_tasks_id():
         data = requests.post(f'{utils.base_url}databases/{database_todoist}/query', json={'start_cursor': cursor},
                              headers=utils.headers).json()
         ids += [task['properties']['Id']['rich_text'][0]['plain_text'] for task in data['results'] if task['properties']['Id']['rich_text']]
-        print('Tasks already in db:', len(ids))
+        print('Tasks in db:', len(ids))
     
     return ids
 
