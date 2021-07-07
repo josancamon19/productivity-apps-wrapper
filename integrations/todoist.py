@@ -122,9 +122,6 @@ def get_tasks_history(already_saved_tasks):
             print('Ignoring', project_data['name'])
             continue
         
-        if project_data['name'] != 'Android':
-            continue
-        
         completed_tasks = get_completed_tasks_by_project_id(project_id)
         print(project_data['name'], 'tasks:', len(completed_tasks))
         completed_tasks = list(filter(lambda task: str(task['id']) not in already_saved_tasks, completed_tasks))

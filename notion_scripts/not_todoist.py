@@ -38,9 +38,10 @@ def query_today_tasks():
             "date": {"equals": get_today_str()}
         }
     }
+    print(get_today_str())
     result = requests.post(f'{utils.base_url}databases/{database_todoist}/query', json=data, headers=utils.headers).json()
     tasks = defaultdict(list)
-    
+    print(result)
     for task in result['results']:
         props = task['properties']
         project = props['Project']['select']['name'].capitalize()
